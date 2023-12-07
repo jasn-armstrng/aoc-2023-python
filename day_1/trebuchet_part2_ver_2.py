@@ -48,8 +48,9 @@ def find_edge_numbers(string: str) -> str:
 
     numbers_found.sort(key=lambda x: x.start)  # Sort by start index
 
+    # If a calibration value has a number overlap e.g `eightwo` the first and last number together is 88
     first_number = numbers_found[0].number if numbers_found else 0
-    last_number = numbers_found[-1].number if numbers_found else 0
+    last_number = numbers_found[-1].number if numbers_found[-1].start > numbers_found[0].end else numbers_found[0].number
 
     return f"{first_number}{last_number}"
 
