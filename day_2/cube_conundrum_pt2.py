@@ -1,4 +1,5 @@
 def parse_game_results(cubes: dict, game: str) -> tuple:
+    """Get game ID and number of each cube in all game sets"""
     game_id = ""
     sets = {key: [] for key in cubes.keys()}
     current_number = ''
@@ -27,6 +28,7 @@ def parse_game_results(cubes: dict, game: str) -> tuple:
 
 
 def calc_game_power(game_results: tuple) -> int:
+    """Power = product of each of the highest cube values"""
     power = 1
     for _, value in game_results[1].items():
         power *= max(value)
