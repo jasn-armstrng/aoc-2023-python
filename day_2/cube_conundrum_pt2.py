@@ -1,4 +1,5 @@
 def parse_game_results(cubes: dict, game: str) -> tuple:
+    """Get game ID and number of each cube in all game sets"""
     game_id = ""
     sets = {key: [] for key in cubes.keys()}
     current_number = ''
@@ -26,21 +27,20 @@ def parse_game_results(cubes: dict, game: str) -> tuple:
     return (int(game_id), sets)  # e.g. (1, {'red': [7, 4, 3], 'green': [5, 16, 11], 'blue': [4, 3]})
 
 
-def is_valid_game(cubes: dict, game_results: tuple) -> int:
-    for key, value in cubes.items():
-        if max(game_results[1].get(key)) > value:
-            return 0
-    return game_results[0] if game_results[0] is not None else 0
+def calc_game_power(game_results: tuple) -> int:
+    """Power = product of each of the highest cube values"""
+    power = 1
+    for _, value in game_results[1].items():
+        power *= max(value)
+    return power
 
 
 if __name__ == "__main__":
-    sum = 0
+    sum_of_powers = 0
     cubes = { "red": 12, "green": 13, "blue": 14 }
-
     with open("puzzle.txt") as file:
         for line in file:
             game = line.strip()
             game_results = parse_game_results(cubes, game)
-            sum += is_valid_game(cubes, game_results)
-
-    print(f"Sum: {sum}")
+            sum_of_powers += calc_game_power(game_results)
+    print(f"Sum: {sum_of_powers}")
